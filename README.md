@@ -25,6 +25,10 @@ Here are my thoughts of what would be nice to add or fix:
 
 ## Release History
 
+* 1.1.0
+    * Добавил обработку файла с форматами
+    * Подтягиваются форматы при сопоставлении кода склада Х5
+    * Добавил поле, в котором выбирается файл с форматами
 * 1.0.0
     * First unflexible working version to temporary satisfy my needs
 

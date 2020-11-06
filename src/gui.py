@@ -24,6 +24,7 @@ lb = Lables()
 def runConverting():
     tup = dialog.getPaths()
     sheet = sheetField.getFieldValue()
+    format_file = dialog.getFormatFile()
 
     # Удаляем сообщения если есть
     lb.clearMessages()
@@ -45,7 +46,7 @@ def runConverting():
         window.update()
         
         # Запускаем процесс
-        res = processFile(path, sheet)
+        res = processFile(path, format_file, sheet)
 
         # Вставляем сообщение
         message = f"Файл обработан. Данные в новом файле {res}"
@@ -67,8 +68,10 @@ def runConverting():
         
 
 # Инициализация кнопки выбора файлов
-chooseFileBtn = Button(window, text="Выбрать файлы", command=dialog.callDialog, width=25, height=1)
+chooseFileBtn = Button(window, text="Выбрать файлы для обработки", command=dialog.callDialog, width=25, height=1)
 chooseFileBtn.pack(side=TOP, padx=5, pady=5)
+chooseFormatBtn = Button(window, text="Выбрать файл с форматами", command=dialog.callDialogOneFile, width=25, height=1)
+chooseFormatBtn.pack(side=TOP, padx=5, pady=5)
 
 # Инициализация поля ввода пароля
 sheetField.configure(width=30, justify=CENTER)

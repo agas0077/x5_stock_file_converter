@@ -5,10 +5,11 @@ import re
 from pathlib import Path
 from os import path
 
-def processFile(excel_file_path, sheet="Sheet1"):
+def processFile(excel_file_path, format_file, sheet="Sheet1"):
 
     # Определяем путь к файлу 
     excel_file_path = Path(excel_file_path)
+    dc_format_path = Path(format_file)
 
     # Открываем файл Excel
     file = xl.load_workbook(excel_file_path)
@@ -93,11 +94,24 @@ def processFile(excel_file_path, sheet="Sheet1"):
     df1.insert(0, "Год", [year]*(len(df1.index)))
 
     # Переименовываем столбец с остатками из даты в "Остаток"
-    df1 = df1.rename(columns={str(dates_array[0]): "Остаток"})
+    df1 = df1.rename(columns={str(dates_array[0]): "Остаток, кор"})
+
+    # Подключаемся к файлу с форматами РЦ
+    format_df = pd.read_excel(dc_format_path)
+    # На всякий случай меняем формат кода склада на числовой
+    df1 = df1.astype({'Код склада': int})
+    # Подтягиваем к основному фрейму форматы РЦ на основе кода РЦ Х5
+    df1 = df1.merge(format_df, left_on='Код склада', right_on='Код склада Х5', how='left')
+    # Если не удалось найти сопоставление по кодам, то пишем, что код надо добавить в файл
+    df1.fillna(value={'формат': 'кода склада нет в файле Формат РЦ'}, inplace=True)
+    # Удаляем ненужные столбцы
+    df1.drop(columns=['Наименование РЦ', 'Код склада Х5', 'Название склада Х5'], inplace=True)
+    # Меняем порядок столбцов
+    df1 = df1[['Год', 'Неделя',	'Код склада', 'Наименование точки',	'формат', 'PLU', 'ШК', 'Наименование Товара', 'Остаток, кор']]
 
     # Сохраняем файл
     fileName = f"X5_Stock_{week}.xlsx"
     whereToPut = path.join(excel_file_path.parent, fileName)
-    df1.to_excel(whereToPut, index=0)
+    df1.to_excel(whereToPut, index=False)
 
     return fileName
