@@ -4,6 +4,7 @@ import pandas as pd
 import re
 from pathlib import Path
 from os import path
+import datetime
 
 def processFile(excel_file_path, format_file, sheet="Sheet1"):
 
@@ -110,7 +111,7 @@ def processFile(excel_file_path, format_file, sheet="Sheet1"):
     df1 = df1[['Год', 'Неделя',	'Код склада', 'Наименование точки',	'формат', 'PLU', 'ШК', 'Наименование Товара', 'Остаток, кор']]
 
     # Сохраняем файл
-    fileName = f"X5_Stock_{week}.xlsx"
+    fileName = f"X5_Stock_{week + str(datetime.datetime.now().year)[2:]}.xlsx"
     whereToPut = path.join(excel_file_path.parent, fileName)
     df1.to_excel(whereToPut, index=False)
 
