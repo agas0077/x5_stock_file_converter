@@ -108,7 +108,7 @@ def processFile(excel_file_path, format_file, sheet="Sheet1"):
     # Удаляем ненужные столбцы
     df1.drop(columns=['Ship-to', 'DC X5 code', 'DC'], inplace=True)
     # Меняем порядок столбцов
-    df1 = df1[['Год', 'Неделя',	'Код склада', 'Наименование точки',	'Формат', 'PLU', 'ШК', 'Наименование Товара', 'Остаток, кор']]
+    df1 = df1[['Год', 'Неделя',	'Код склада', 'Наименование точки',	'Формат', 'PLU', 'ШК', 'Наименование Товара', 'Остаток, шт']]
 
     # Сохраняем файл
     fileName = f"X5_Stock_{week + str(datetime.datetime.now().year)[2:]}.xlsx"

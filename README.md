@@ -25,6 +25,8 @@ Here are my thoughts of what would be nice to add or fix:
 
 ## Release History
 
+* 1.1.3
+    * Ищменил название столбца "Остатки, кор" на "Остатки, шт"
 * 1.1.2
     * Скорректировал взаимодействие с файлом с форматами
 * 1.1.1
