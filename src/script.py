@@ -95,7 +95,7 @@ def processFile(excel_file_path, format_file, sheet="Sheet1"):
     df1.insert(0, "Год", [year]*(len(df1.index)))
 
     # Переименовываем столбец с остатками из даты в "Остаток"
-    df1 = df1.rename(columns={str(dates_array[0]): "Остаток, кор"})
+    df1 = df1.rename(columns={str(dates_array[0]): "Остаток, шт"})
 
     # Подключаемся к файлу с форматами РЦ
     format_df = pd.read_excel(dc_format_path)
